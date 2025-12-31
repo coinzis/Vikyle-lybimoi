@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ для Вики ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ff2d55; --secondary: #6a00f4; --bg: #0b0118; }
+        body {
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 20% 30%, rgba(106, 0, 244, 0.15) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255, 45, 85, 0.15) 0%, transparent 40%);
+            color: #fff; font-family: 'Montserrat', sans-serif; margin: 0;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden;
+        }
+        #main-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px 20px;
+            border-radius: 24px; width: 90%; max-width: 400px; text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+        }
+        #progress {
+            position: absolute; top: 0; left: 0; height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transition: width 0.4s ease; border-radius: 24px 24px 0 0;
+        }
+        .quiz-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 1px solid rgba(255, 255, 255, 0.2); }
+        h1 { font-weight: 600; font-size: 1.3rem; margin-bottom: 10px; }
+        p { font-weight: 300; opacity: 0.8; line-height: 1.5; font-size: 0.95rem; }
+        input {
+            background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px; color: white; border-radius: 12px; width: 100%;
+            box-sizing: border-box; margin: 15px 0; font-size: 1rem; text-align: center; outline: none;
+        }
+        .btn {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            border: none; padding: 15px; color: white; border-radius: 12px;
+            font-weight: 600; cursor: pointer; width: 100%; text-transform: uppercase;
+        }
+        .hidden { display: none; }
+        .step { animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .final-msg { font-size: 1rem; line-height: 1.6; color: #ffd1d1; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div id="main-card">
+    <div id="progress" style="width: 0%"></div>
+
+    <div id="step0" class="step">
+        <img src="ССЫЛКА_НА_ОБЩЕЕ_ФОТО" class="quiz-img" onerror="this.style.display='none'">
+        <h1>Система 2026</h1>
+        <p>Привет, Викуля! Чтобы войти в мой новый год, подтверди личность ❤️</p>
+        <button class="btn" onclick="go(1)">Начать</button>
+    </div>
+
+    <div id="step1" class="step hidden">
+        <img src="Https://www.transparenttextures.com/patterns/stardust.png" class="quiz-img" onerror="this.style.display='none'">
+        <h1>Вопрос #1</h1>
+        <p>В каком месте мы впервые нормально пообщались?</p>
+        <input type="text" id="ans1" placeholder="Ответ...">
+        <button class="btn" onclick="check(1, ['лагерь', 'лагере'])">Далее</button>
+    </div>
+
+    <div id="step2" class="step hidden">
+        <img src="ССЫЛКА_ФОТО_2" class="quiz-img" onerror="this.style.display='none'">
+        <h1>Вопрос #2</h1>
+        <p>кто моя лпшечка любимая дорогая</p>
+        <input type="text" id="ans2" placeholder="Ответ...">
+        <button class="btn" onclick="check(2, ['я', 'яя'])">Далее</button>
+    </div>
+
+    <div id="step3" class="step hidden">
+        <img src="ССЫЛКА_ФОТО_3" class="quiz-img" onerror="this.style.display='none'">
+        <h1>Вопрос #3</h1>
+        <p>сколько нфт я продал ради твоих подарков на вб и в телеге</p>
+        <input type="text" id="ans3" placeholder="Число...">
+        <button class="btn" onclick="check(3, ['7', '6'])">Почти всё...</button>
+    </div>
+
+    <div id="step4" class="step hidden">
+        <img src="ССЫЛКА_ФОТО_4" class="quiz-img" onerror="this.style.display='none'">
+        <h1>Последнее</h1>
+        <p>ты пойдешь со мной гулять завтра да Вика ❤️❤️</p>
+        <input type="text" id="ans4" placeholder="Да или нет?">
+        <button class="btn" onclick="check(4, ['да', 'конечно', 'погнали'])">Открыть подарок</button>
+    </div>
+
+    <div id="final" class="step hidden">
+        <img src="ФИНАЛЬНОЕ_ФОТО_ВАШЕ" class="quiz-img" style="max-height: 250px;" onerror="this.style.display='none'">
+        <h1 style="color: var(--primary)">Ебать ты крутая! ❤️</h1>
+        <div class="final-msg">
+            Вика, ты невероятная. С самого лагеря я понял, что ты особенная. <br><br>
+            Я ценю каждый наш момент, каждую шутку и каждое фото. Надеюсь, в этом году мы будем общаться так же много и так же хорошо. Очень люблю тебя и ценю. Всего тебе наилучшего, Викуля. Знай, что я готов пойти с тобой когда угодно и куда угодно. Ты лучший человек, с которым я познакомился в этом году.
+        </div>
+        <div style="font-size: 40px; margin-top: 15px;">❤️🦭🦭</div>
+    </div>
+</div>
+
+<script>
+    let totalSteps = 4;
+    function go(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+        document.getElementById('step' + n).classList.remove('hidden');
+        document.getElementById('progress').style.width = (n / totalSteps * 100) + '%';
+    }
+    function check(current, correctAnswers) {
+        let input = document.getElementById('ans' + current).value.toLowerCase().trim();
+        let isRight = correctAnswers.some(a => input.includes(a.toLowerCase()));
+        if (isRight) { current < totalSteps ? go(current + 1) : finish(); } 
+        else { alert('не'); }
+    }
+    function finish() {
+        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+        document.getElementById('final').classList.remove('hidden');
+        document.getElementById('progress').style.width = '100%';
+        var end = Date.now() + (4 * 1000);
+        (function frame() {
+            confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff2d55', '#6a00f4'] });
+            confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff2d55', '#6a00f4'] });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+    }
+</script>
+</body>
+</html>
